@@ -19,7 +19,7 @@ class LinkedList:
     def __len__(self):
         return self.size
 
-    def add_to_end(self, value):
+    def add_to_tail(self, value):
         new_node = Node(value)
         if not self.head:
             self.head = new_node
@@ -31,14 +31,14 @@ class LinkedList:
             current.set_next(new_node)
             self.size += 1
 
-    def add_to_beginning(self, value):
+    def add_to_head(self, value):
         new_node = Node(value)
         if not self.head:
             self.head = new_node
             self.size += 1
         else:
-            new_node.next_node = self.head
-            new_node = self.head
+            new_node.set_next(self.head)
+            self.head = new_node
             self.size += 1
 
     def remove_from_head(self):

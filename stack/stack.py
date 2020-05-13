@@ -44,7 +44,7 @@ class Stack:
         return self.storage.__len__()
 
     def push(self, value):
-        self.storage.add_to_beginning(value)
+        self.storage.add_to_head(value)
 
     def pop(self):
-        self.storage.remove_from_head()
+        return self.storage.remove_from_head()
