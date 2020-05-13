@@ -118,11 +118,12 @@ class DoublyLinkedList:
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
     def move_to_end(self, node):
-        if self.length == 0 or node == self.tail:
+        if self.length == 0:
             return None
         else:
-            node.delete()
+            self.delete(node)
             self.tail.insert_after(node.value)
+            self.length += 1
             self.tail = self.tail.next
 
     """Removes a node from the list and handles cases where
@@ -152,5 +153,5 @@ class DoublyLinkedList:
             if current.value > current_max:
                 current_max = current.value
             current = current.next
-            return max
+        return current_max
             
