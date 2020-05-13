@@ -6,6 +6,21 @@ class ListNode:
         self.prev = prev
         self.next = next
 
+    def get_value(self):
+        return self.value
+
+    def get_next(self):
+        return self.next
+
+    def get_prev(self):
+        return self.prev
+
+    def set_next(self, new_next):
+        self.next = new_next
+
+    def set_prev(self, new_prev):
+        self.prev = new_prev
+
     """Wrap the given value in a ListNode and insert it
     after this node. Note that this node could already
     have a next node it is point to."""
@@ -48,41 +63,101 @@ class DoublyLinkedList:
     as the new head of the list. Don't forget to handle 
     the old head node's previous pointer accordingly."""
     def add_to_head(self, value):
-        pass
+        new_node = ListNode(value)
+        if not self.head:
+            self.head = new_node
+            self.tail = new_node
+            self.length += 1
+        else:
+            self.head.set_prev(new_node)
+            new_node.set_next(self.head)
+            self.head = new_node
+            self.length += 1
 
     """Removes the List's current head node, making the
     current head's next node the new head of the List.
     Returns the value of the removed Node."""
     def remove_from_head(self):
-        pass
+        if not self.head:
+            return None
+        else: 
+            deleted = self.head.get_value
+            self.head = self.get_next()
+            self.head.set_prev(None)
+            self.length -= 1
+            return deleted.value
 
     """Wraps the given value in a ListNode and inserts it 
     as the new tail of the list. Don't forget to handle 
     the old tail node's next pointer accordingly."""
     def add_to_tail(self, value):
-        pass
+        new_node = ListNode(value)
+        if not self.head:
+            self.head = new_node
+            self.tail = new_node
+            self.length += 1
+        else:
+            self.tail.set_next(new_node)
+            new_node.set_prev(self.tail)
+            self.tail = new_node
+            self.length += 1
 
     """Removes the List's current tail node, making the 
     current tail's previous node the new tail of the List.
     Returns the value of the removed Node."""
     def remove_from_tail(self):
-        pass
+        if not self.head:
+            return None
+        else:
+            deleted = self.tail
+            self.tail = deleted.prev
+            self.tail.set_next(None)
+            return deleted.value
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new head node of the List."""
     def move_to_front(self, node):
-        pass
+        if not self.head:
+            return None
+        else:
+            node.next.set_prev(node.prev)
+            node.prev.set_next(node.next)
+            node.set_next(self.head)
+            node.set_prev(None)
+            self.head = node
 
     """Removes the input node from its current spot in the 
     List and inserts it as the new tail node of the List."""
     def move_to_end(self, node):
-        pass
+        if not self.head:
+            return None
+        else:
+            node.next.set_prev(node.prev)
+            node.prev.set_next(node.next)
+            node.set_prev(self.tail)
+            node.set_next(None)
+            self.tail = node
 
     """Removes a node from the list and handles cases where
     the node was the head or the tail"""
     def delete(self, node):
-        pass
+        if not self.head:
+            return None
+        elif node is self.head:
+            node.remove_from_head()
+        elif node is self.tail:
+            node.remove_from_tail()
+        else:
+            node.next.set_prev(node.prev)
+            node.prev.set_next(node.next)
         
     """Returns the highest value currently in the list"""
     def get_max(self):
-        pass
+        current = self.head
+        max = 0
+        while current is not None:
+            if current.value > max:
+                max = current.value
+                current = current.get_next()
+            else: 
+                return max 
