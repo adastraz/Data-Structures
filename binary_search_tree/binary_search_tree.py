@@ -17,37 +17,96 @@ class BSTNode:
 
     # Insert the given value into the tree
     def insert(self, value):
-        pass
+        if not self.value:
+            self.value = value
+        elif value >= self.value:
+            if not self.right:
+                self.right = BSTNode(value)
+            else:
+                self.right.insert(value)
+
+        else:
+            if not self.left:
+                self.left = BSTNode(value)
+            else:
+                self.left.insert(value)
 
     # Return True if the tree contains the value
     # False if it does not
     def contains(self, target):
-        pass
+        if target == self.value:
+            return True
+        if target < self.value:
+            # go left
+            if not self.left:
+                return False
+            return self.left.contains(target)
+        else:
+            #go right
+            if not self.right:
+                return False
+            return self.right.contains(target)
 
     # Return the maximum value found in the tree
     def get_max(self):
-        pass
+        current = self
+        while current.right is not None:
+            current = current.right
+        return current.value
 
     # Call the function `fn` on the value of each node
     def for_each(self, fn):
-        pass
+        fn(self.value)
+        if self.right:
+            self.right.for_each(fn)
+        if self.left:
+            self.left.for_each(fn)
 
+    def iterative_for_each(self, fn):
+        stack = []
+        stack.append(self)
+        while len(stack) > 0:
+            current = stack.pop()
+            if current.right:
+                stack.append(current.right)
+            if current.left:
+                stack.append(current.left)
+            fn(current.value)
     # Part 2 -----------------------
 
     # Print all the values in order from low to high
     # Hint:  Use a recursive, depth first traversal
     def in_order_print(self, node):
-        pass
+        if self.left: 
+            self.left.in_order_print(self.left)
+        print(self.value)
+        if self.right: 
+            self.right.in_order_print(self.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative breadth first traversal
     def bft_print(self, node):
-        pass
+        if node == None:
+            return
+        queue = []
+        # Appends itself
+        queue.append(node)
+        while(len(queue) > 0):
+            print(queue[0].value)
+            current = queue.pop(0)
+            if current.left != None:
+                queue.append(current.left)
+            if current.right != None:
+                queue.append(current.right)
 
     # Print the value of every node, starting with the given node,
     # in an iterative depth first traversal
     def dft_print(self, node):
-        pass
+        print(node.value)
+        if self.left:
+            self.left.dft_print(self.left)
+        if self.right:
+            self.right.dft_print(self.right)
 
     # Stretch Goals -------------------------
     # Note: Research may be required
